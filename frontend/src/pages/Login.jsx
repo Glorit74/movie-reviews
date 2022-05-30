@@ -12,7 +12,7 @@ function Login() {
     try {
       let code = searchParams.get("code");
 
-      let response = await axios.post("http://localhost:4000/api/login", {
+      let response = await axios.post("http://localhost:4001/api/login", {
         code,
       });
       //   console.log("getToken: ", response);
@@ -23,7 +23,7 @@ function Login() {
   };
 
   const getPrivate = async () => {
-    const response = await axios.get("http://localhost:4000/api/private", {
+    const response = await axios.get("http://localhost:4001/api/private", {
       headers: {
         authtoken: sessionStorage.getItem("sessionId"),
       },
