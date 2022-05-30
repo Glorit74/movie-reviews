@@ -1,3 +1,10 @@
+API key: b0632c9fbca8d3c3fd69e92a84678c56
+
+API request example:
+https://api.themoviedb.org/3/movie/550?api_key=b0632c9fbca8d3c3fd69e92a84678c56
+v4 auth:
+eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiMDYzMmM5ZmJjYThkM2MzZmQ2OWU5MmE4NDY3OGM1NiIsInN1YiI6IjYyOTRlYzA5ZjJjZjI1MDA0ZjU0YWY3MiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.jUC4EgotTijiJudk0TFLwPBlSatHeIerLSD3Zs5MK4E
+
 # Movie reviews
 
 ## Story
