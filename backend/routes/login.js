@@ -49,10 +49,7 @@ router.post("/", async (req, res) => {
       name = newUser.name;
     }
 
-    const myToken = jwt.sign(
-      { id: id, name: username },
-      process.env.MY_SECRET_KEY
-    );
+    const myToken = jwt.sign({ id: id, name: name }, process.env.MY_SECRET_KEY);
     res.json(myToken);
   } catch (error) {
     console.log("Error catch: ", error);
