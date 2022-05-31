@@ -1,23 +1,32 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { getPopularMovies } from "../api/movies";
+import { getMovies, getPopularMovies } from "../api/movies";
 import MovieCard from "../components/Moviecard";
+import { useSearchParams } from "react-router-dom";
+
 
 const Movies = () => {
   const [movies, setMovies] = useState(null);
-
+  const [searchParams] = useSearchParams();
+  
   useEffect(() => {
-    const getMoviesData = async () => {
+    const getMoviesData = async (filter) => {
       try {
-        const response = await getPopularMovies();
-        setMovies(response.data.data.popularMovies);
+        if(filter) {
+          const movieResponse = await getMovies(filter)
+          setMovies(movieResponse.data.data.searchMovies)
+        }
+        else { 
+          const movieResponse = await getPopularMovies();
+          setMovies(movieResponse.data.data.popularMovies);
+        }
       } catch (error) {
         throw error;
       }
     };
 
-    getMoviesData();
-  }, []);
+    getMoviesData(searchParams.get("q") || "");
+  }, [searchParams]);
 
   return (
     <div className="movies-container">
