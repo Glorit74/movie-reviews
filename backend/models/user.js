@@ -1,16 +1,25 @@
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
-    googleId: { type: String, required: true, unique: true },
-    email: { type: String, required: true, unique: true },
-    //name: {type: String}
+  googleId: { type: String, required: true, unique: true }, //sub
+  email: { type: String, required: true, unique: true },
+  name: String,
+  nickname: String,
+  given_name: String,
+  family_name: String,
+  locale: String,
+  picture: String,
+  //   {
+  //     data: Buffer,
+  //     contentType: String,
+  //   },
 });
 
 const reviewSchema = new mongoose.Schema({
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    movieId: { type: String, required: true },
-    rating: { type: Number },
-    comment: { type: String },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  movieId: { type: String, required: true },
+  rating: { type: Number },
+  comment: { type: String },
 });
 
 const User = mongoose.model("User", userSchema);
