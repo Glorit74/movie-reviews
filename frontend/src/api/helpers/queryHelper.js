@@ -16,7 +16,7 @@ export const getPopularMoviesQuery = () =>
   }`,
   });
 
- export const getMovieQuery = (id) =>
+export const getMovieQuery = (id) =>
   JSON.stringify({
     query: `query getMovie {
     movie(id: ${id}) {
@@ -46,4 +46,24 @@ export const getPopularMoviesQuery = () =>
       }
     }
   }`,
-});
+  });
+
+export const getSearchMoviesQuery = (searchTerm) =>
+  JSON.stringify({
+    query: `query SearchMovies {
+      searchMovies(query: "${searchTerm}}") {
+        id
+        name
+        overview
+        score
+        poster { 
+          medium
+        }
+        genres { 
+          name
+        }
+      }
+    }`,
+  });
+
+  

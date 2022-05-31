@@ -1,5 +1,5 @@
 import http from "axios";
-import { getMovieQuery, getPopularMoviesQuery } from "./helpers/queryHelper";
+import { getMovieQuery, getPopularMoviesQuery, getSearchMoviesQuery } from "./helpers/queryHelper";
 
 export const getPopularMovies = async () => {
   try {
@@ -24,3 +24,12 @@ export const getMovie = async (id) => {
     throw error;
   }
 };
+
+export const getMovies = async (filter) => {
+  try {
+      const response = await http.post(process.env.REACT_APP_TMDB_GRAPH_API_URL, getSearchMoviesQuery(filter));
+      return response;
+  } catch(error) {
+      throw error;
+  }
+}
