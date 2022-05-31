@@ -20,32 +20,37 @@ const Navbar = () => {
   const client_id =
     "817290401795-d6ds6ronnut9djcamv7mu1dakheeefr3.apps.googleusercontent.com";
 
-  useEffect(() => {
-    checkSessionStorage();
-  }, []);
-
-  const checkSessionStorage = () => {
-    let token = sessionStorage.getItem("sessionId");
-    console.log(token);
-    
-    if (!token) {
-      sessionStorage.removeItem("token");
-      navigate(`/`);
-      setLoggedIn(false);
-    } else {
-      let decoded = jwt_decode(token);
-      if (!decoded.id) {
-        sessionStorage.removeItem("token");
+    const checkSessionStorage = () => {
+      let token = sessionStorage.getItem("sessionId");
+      //console.log(token);
+      
+      if (!token) {
+        //sessionStorage.removeItem("token");
         navigate(`/`);
         setLoggedIn(false);
       } else {
-        setLoggedIn(true);
+        let decoded = jwt_decode(token);
+        if (!decoded.id) {
+          sessionStorage.removeItem("token");
+          navigate(`/`);
+          setLoggedIn(false);
+        } else {
+          setLoggedIn(true);
+        }
       }
-    }
-  };
+    };
+    
+    useEffect(() => {
+      checkSessionStorage();
+    }, [loggedIn]);
+  
+    useEffect(() => {
+      checkSessionStorage();
+    }, []);
 
-  const logout = () => {
-    sessionStorage.removeItem("token");
+
+    const logout = () => {
+      sessionStorage.removeItem("sessionId");
     navigate(`/`);
   };
 

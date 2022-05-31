@@ -3,12 +3,12 @@ const router = require("express").Router();
 const axios = require("axios");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
-const User = require("../models/user");
+const { User } = require("../models/user");
 
 const config = process.env;
 
 router.post('/', async(req, res) => {
-    console.log(req.body);
+    //console.log(req.body);
 
     try {
         let response = await axios.post("https://oauth2.googleapis.com/token", {
@@ -21,17 +21,20 @@ router.post('/', async(req, res) => {
 
 
         const decoded = jwt.decode(response.data.id_token);
-        console.log(decoded);
+        //console.log(decoded);
 
         let user = await User.findOne({
             googleId: decoded.sub
         });
 
+        let id = user._id;
+
         if (!user) {
-            console.log("új user lép éppen be");
+            //console.log("új user lép éppen be");
             let newUser = new User({
                 googleId: decoded.sub,
                 email: decoded.email,
+                //name: decoded.name
 
             });
 
@@ -39,11 +42,10 @@ router.post('/', async(req, res) => {
                 if (err) return console.error(err);
                 console.log(user.email + " saved to collection.");
             });
-
-
+            id = newUser._id;
         }
 
-        const myToken = jwt.sign({ id: decoded.sub }, process.env.MY_SECRET_KEY);
+        const myToken = jwt.sign({ id: id }, process.env.MY_SECRET_KEY);
         res.json(myToken);
 
     } catch (error) {
