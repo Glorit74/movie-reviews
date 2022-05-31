@@ -27,7 +27,7 @@ const Navbar = () => {
   const checkSessionStorage = () => {
     let token = sessionStorage.getItem("sessionId");
     console.log(token);
-    /*
+    
     if (!token) {
       sessionStorage.removeItem("token");
       navigate(`/`);
@@ -41,7 +41,7 @@ const Navbar = () => {
       } else {
         setLoggedIn(true);
       }
-    }*/
+    }
   };
 
   const logout = () => {
