@@ -4,8 +4,6 @@ import axios from "axios";
 
 function Login() {
   const [searchParams, setSearchParams] = useSearchParams({});
-  const [data, setData] = useState([]);
-  const [isClicked, setIsClicked] = useState(false);
   const navigate = useNavigate();
 
   const getToken = async () => {
@@ -15,8 +13,9 @@ function Login() {
       let response = await axios.post("http://localhost:4001/api/login", {
         code,
       });
-      //   console.log("getToken: ", response);
+      console.log("getToken: ", response);
       sessionStorage.setItem("sessionId", response.data);
+      navigate(`/`);
     } catch (error) {
       console.log("Error: " + error);
     }
