@@ -20,37 +20,36 @@ const Navbar = () => {
   const client_id =
     "817290401795-d6ds6ronnut9djcamv7mu1dakheeefr3.apps.googleusercontent.com";
 
-    const checkSessionStorage = () => {
-      let token = sessionStorage.getItem("sessionId");
-      //console.log(token);
-      
-      if (!token) {
-        //sessionStorage.removeItem("token");
+  const checkSessionStorage = () => {
+    let token = sessionStorage.getItem("sessionId");
+    //console.log(token);
+
+    if (!token) {
+      //sessionStorage.removeItem("token");
+      navigate(`/`);
+      setLoggedIn(false);
+    } else {
+      let decoded = jwt_decode(token);
+      if (!decoded.id) {
+        sessionStorage.removeItem("token");
         navigate(`/`);
         setLoggedIn(false);
       } else {
-        let decoded = jwt_decode(token);
-        if (!decoded.id) {
-          sessionStorage.removeItem("token");
-          navigate(`/`);
-          setLoggedIn(false);
-        } else {
-          setLoggedIn(true);
-        }
+        setLoggedIn(true);
       }
-    };
-    
-    useEffect(() => {
-      checkSessionStorage();
-    }, [loggedIn]);
-  
-    useEffect(() => {
-      checkSessionStorage();
-    }, []);
+    }
+  };
 
+  useEffect(() => {
+    checkSessionStorage();
+  }, [loggedIn]);
 
-    const logout = () => {
-      sessionStorage.removeItem("sessionId");
+  useEffect(() => {
+    checkSessionStorage();
+  }, []);
+
+  const logout = () => {
+    sessionStorage.removeItem("sessionId");
     navigate(`/`);
   };
 
@@ -79,7 +78,7 @@ const Navbar = () => {
               color="inherit"
               onClick={() =>
                 window.open(
-                  `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=${client_id}&scope=openid%20email&redirect_uri=${redirect_uri}`
+                  `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=${client_id}&scope=openid%20profile%20email&redirect_uri=${redirect_uri}`
                 )
               }
             >
