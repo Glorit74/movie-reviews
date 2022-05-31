@@ -151,7 +151,7 @@ const Navbar = () => {
               color="inherit"
               onClick={() =>
                 window.open(
-                  `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=${client_id}&scope=openid%20email&redirect_uri=${redirect_uri}`
+                  `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=${client_id}&scope=openid%20profile%20email&redirect_uri=${redirect_uri}`
                 )
               }
             >

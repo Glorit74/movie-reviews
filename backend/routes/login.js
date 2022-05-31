@@ -26,12 +26,9 @@ router.post("/", async (req, res) => {
       googleId: decoded.sub,
     });
 
-    let id = user._id;
-    let name = user.name;
-
     if (!user) {
       //console.log("új user lép éppen be");
-      let newUser = new User({
+      let newUser = await User.create({
         googleId: decoded.sub,
         email: decoded.email,
         name: decoded.name,
@@ -40,17 +37,22 @@ router.post("/", async (req, res) => {
         locale: decoded.locale,
         picture: decoded.picture,
       });
-      newUser.save();
+
+      //   newUser.save();
       //   newUser.save(function (err, user) {
       //     if (err) return console.error(err);
       //     console.log(user.email + " saved to collection.");
       //   });
-      id = newUser._id;
-      name = newUser.name;
-    }
 
-    const myToken = jwt.sign({ id: id, name: name }, process.env.MY_SECRET_KEY);
-    res.json(myToken);
+      let id = newUser.googleId;
+      let name = newUser.name;
+
+      const myToken = jwt.sign(
+        { id: id, name: name },
+        process.env.MY_SECRET_KEY
+      );
+      res.json(myToken);
+    }
   } catch (error) {
     console.log("Error catch: ", error);
     res.sendStatus(500);
