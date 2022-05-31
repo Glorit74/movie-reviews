@@ -22,7 +22,6 @@ const MovieDetails = () => {
       try {
         const response = await getMovie(id);
         setMovie(response.data.data.movie);
-        //console.log(response.data.data.movie);
       } catch (error) {
         throw error;
       }

@@ -4,19 +4,17 @@ import { getMovies, getPopularMovies } from "../api/movies";
 import MovieCard from "../components/Moviecard";
 import { useSearchParams } from "react-router-dom";
 
-
 const Movies = () => {
   const [movies, setMovies] = useState(null);
   const [searchParams] = useSearchParams();
-  
+
   useEffect(() => {
     const getMoviesData = async (filter) => {
       try {
-        if(filter) {
-          const movieResponse = await getMovies(filter)
-          setMovies(movieResponse.data.data.searchMovies)
-        }
-        else { 
+        if (filter) {
+          const movieResponse = await getMovies(filter);
+          setMovies(movieResponse.data.data.searchMovies);
+        } else {
           const movieResponse = await getPopularMovies();
           setMovies(movieResponse.data.data.popularMovies);
         }

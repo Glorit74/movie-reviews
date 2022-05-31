@@ -29,15 +29,14 @@ const MovieCard = ({ movie }) => {
             <div className="movie-rating-container">
               <span>{movie.score}</span>
             </div>
-            
-              <Link to={`/movies/${movie.id}`}>
+
+            <Link to={`/movies/${movie.id}`}>
               <img
-              className="movie-poster"
-              src={getImageOrFallbackUrl(movie.poster?.medium)}
-              alt={movie.name}
+                className="movie-poster"
+                src={getImageOrFallbackUrl(movie.poster?.medium)}
+                alt={movie.name}
               />
-              </Link>
-            
+            </Link>
           </div>
           <CardContent>
             <div className="movie-title-container">
