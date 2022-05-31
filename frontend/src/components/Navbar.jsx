@@ -8,6 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import http from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import logo from '../imgs/572-5729664_reasons-to-watch-the-guardians-of-the-galaxy.png'
 
 const Navbar = () => {
    const redirect_uri = "http://localhost:3000/callback";
@@ -29,7 +30,7 @@ const Navbar = () => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" style={{ background: 'black' }}>
         <Toolbar>
           <IconButton
             size="large"
@@ -39,8 +40,13 @@ const Navbar = () => {
             sx={{ mr: 2 }}
           ></IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <Link to="/" >MUI ICON :)</Link>
-          </Typography>
+            <Link to="/"> <img className="navbar-logo" src={logo} alt=""/> </Link>
+          </Typography> 
+          <Button
+            color="inherit"            
+          >
+            Search
+          </Button>
           <Button
             color="inherit"
             onClick={() =>

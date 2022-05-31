@@ -7,20 +7,19 @@ import getImageOrFallbackUrl from "../api/helpers/imageHelper";
 import { getMovie } from "../api/movies";
 import MovieCard from "../components/Moviecard";
 
-
 const MovieDetails = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
-
 
   useEffect(() => {
     const getMovieDetails = async () => {
       try {
         const response = await getMovie(id);
         setMovie(response.data.data.movie);
+        console.log(response.data.data.movie);
       } catch (error) {
         throw error;
-      } 
+      }
     };
 
     getMovieDetails();
@@ -33,7 +32,10 @@ const MovieDetails = () => {
           <div className="movies-container">
             <div className="cards-container">
               {movie.recommended.map((recommendedMovie) => (
-                <MovieCard key={`movie-${recommendedMovie.id}`} movie={recommendedMovie} />
+                <MovieCard
+                  key={`movie-${recommendedMovie.id}`}
+                  movie={recommendedMovie}
+                />
               ))}
             </div>
           </div>
@@ -49,7 +51,10 @@ const MovieDetails = () => {
           <Paper sx={{ marginTop: "1.25em" }} elevation={3}>
             <div className="movie-details-container">
               <div className="image">
-                <img src={getImageOrFallbackUrl(movie.poster?.medium)} alt={movie.name} />
+                <img
+                  src={getImageOrFallbackUrl(movie.poster?.medium)}
+                  alt={movie.name}
+                />
               </div>
               <div className="info">
                 <div className="info-container">
@@ -58,8 +63,24 @@ const MovieDetails = () => {
                   </Typography>
                   <p>({movie.runtime} min)</p>
                   <div className="score-container">{movie.score}/10</div>
-                  <div className="buttons-container">
+                  <div className="description-container">{movie.overview}</div>
+                  <br />
+                  <div className="description-container">
+                    <b>Released:</b>{movie.releaseDate}
                   </div>
+                  <br />
+                  <div className="description-container">
+                  <b>Genres:{" "}</b>
+                    {movie.genres.map((genre) => (
+                      <span
+                        key={`genre-${genre.name}`}
+                        className="category-item"
+                      >
+                        {" << "}{genre.name} {" >> "}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="buttons-container">In case you wish to leave a review, please login!</div>
                 </div>
               </div>
             </div>

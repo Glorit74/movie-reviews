@@ -22,6 +22,7 @@ function Login() {
     }
   };
 
+  /*
   const getPrivate = async () => {
     const response = await axios.get("http://localhost:4001/api/private", {
       headers: {
@@ -31,9 +32,10 @@ function Login() {
     // console.log("getPrivate", response.data[0].name);
     setData(response.data[0].name);
   };
+  */
 
   const logout = () => {
-    sessionStorage.setItem("sessionId", "");
+    sessionStorage.removeItem("sessionId");
     return navigate("/");
   };
 
