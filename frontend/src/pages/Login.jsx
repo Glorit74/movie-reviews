@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function Login() {
+function Login({setLoggedIn}) {
   const [searchParams, setSearchParams] = useSearchParams({});
   const navigate = useNavigate();
 
@@ -15,6 +15,7 @@ function Login() {
       });
       console.log("getToken: ", response);
       sessionStorage.setItem("sessionId", response.data);
+      setLoggedIn(true);
       navigate(`/`);
     } catch (error) {
       console.log("Error: " + error);

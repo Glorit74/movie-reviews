@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 function Home() {
+  /*
   let redirect_uri = "http://localhost:3000/callback";
   let client_id =
     "817290401795-d6ds6ronnut9djcamv7mu1dakheeefr3.apps.googleusercontent.com";
@@ -32,6 +33,7 @@ function Home() {
       </button>
     </div>
   );
+  */
 }
 
 export default Home;

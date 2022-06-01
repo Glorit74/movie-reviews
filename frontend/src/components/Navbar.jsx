@@ -53,9 +53,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const Navbar = () => {
+const Navbar = ({loggedIn, setLoggedIn}) => {
   const navigate = useNavigate();
-  const [loggedIn, setLoggedIn] = useState(false);
+  //const [loggedIn, setLoggedIn] = useState(false);
   const [filter, setFilter] = useState("");
 
   const handleFilterChange = (event) => {
@@ -111,6 +111,7 @@ const Navbar = () => {
 
   const logout = () => {
     sessionStorage.removeItem("sessionId");
+    setLoggedIn(false);
     navigate(`/`);
   };
 
