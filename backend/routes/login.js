@@ -40,7 +40,7 @@ router.post("/", async(req, res) => {
                 picture: decoded.picture,
             });
 
-            newUser.save();
+            //newUser.save();
             //   newUser.save(function (err, user) {
             //     if (err) return console.error(err);
             //     console.log(user.email + " saved to collection.");

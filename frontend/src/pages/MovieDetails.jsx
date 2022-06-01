@@ -10,7 +10,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 
-
 const MovieDetails = () => {
   let navigate = useNavigate();
   const { id } = useParams();
@@ -19,25 +18,23 @@ const MovieDetails = () => {
   const [comment, setComment] = useState(null);
   const [reviewed, setReviewed] = useState(false);
   const [loggedInn, setLoggedInn] = useState();
-
+  const [myReviews, setMyReviews] = useState(null);
+  let userId = null;
 
   const checkSessionStorage2 = () => {
     let token = sessionStorage.getItem("sessionId");
-    console.log(token);
-
-     if (token) {
+    //console.log(token);
+    if (token) {
+      let decoded = jwt_decode(token);
+      userId = decoded.id;
       setLoggedInn(true);
-    } 
-    console.log(`LoggedIN = ${loggedInn}`);
+    }
+    //console.log(`LoggedIN = ${loggedInn}`);
   };
 
-
-
   useEffect(() => {
-
     checkSessionStorage2();
   }, []);
-
 
   useEffect(() => {
     const getMovieDetails = async () => {
@@ -113,98 +110,63 @@ const MovieDetails = () => {
                     In case you wish to leave a review, please login!
                   </div> */}
 
-                  { (() => {
-                        if (!loggedInn)
-                            return <div className="buttons-container">
-                            In case you wish to leave a review, please login!
-                            </div>
-                        if (loggedInn) {
-                          if (reviewed) {
-
-                            return <>
-                              <br />
-                              <p>You have already reviewed this movie:</p>
-                              <p>Your rating: {rating}/10</p>
-                              <p>Your commment: {comment}</p>
-                            </>
-                          }else{
-                            return <>
-                              <Typography component="legend">Please score</Typography>
-                              <Rating
-                                size="large"
-                                precision={0.5}
-                                max={10}
-                                onChange={(e) => setRating(e.target.value)}
-                              />
-                              <br />
-                              <br />
-                              <TextField
-                                label="Review comment"
-                                multiline
-                                width="300px"
-                                maxRows={4}
-                                onChange={(e) => setComment(e.target.value)}
-                              />
-                              <br />
-                              <br />
-                              <Button
-                                variant="contained"
-                                color="secondary"
-                                onClick={() => sendReview()}
-                              >
-                                Send review
-                              </Button>
-                              <br />
-                            </>
-
-                          }
-                        }
-                    })()
-
-                  }
-
-
-
-
-
-
-                  {/* {!reviewed ? (
-                    <>
-                      <Typography component="legend">Please score</Typography>
-                      <Rating
-                        size="large"
-                        precision={0.5}
-                        max={10}
-                        onChange={(e) => setRating(e.target.value)}
-                      />
-                      <br />
-                      <br />
-                      <TextField
-                        label="Review comment"
-                        multiline
-                        width="300px"
-                        maxRows={4}
-                        onChange={(e) => setComment(e.target.value)}
-                      />
-                      <br />
-                      <br />
-                      <Button
-                        variant="contained"
-                        color="secondary"
-                        onClick={() => sendReview()}
-                      >
-                        Send review
-                      </Button>
-                      <br />
-                    </>
-                  ) : (
-                    <>
-                      <br />
-                      <p>You have already reviewed this movie:</p>
-                      <p>Your rating: {rating}/10</p>
-                      <p>Your commment: {comment}</p>
-                    </>
-                  )} */}
+                  {(() => {
+                    if (!loggedInn)
+                      return (
+                        <div className="buttons-container">
+                          In case you wish to leave a review, please login!
+                        </div>
+                      );
+                    if (loggedInn) {
+                      if (reviewed && myReviews[0]) {
+                        return (
+                          <>
+                            <br />
+                            <p>You have already reviewed this movie:</p>
+                            <p>
+                              Your rating: {myReviews[0].rating}/10
+                            </p>
+                            <p>
+                              Your commment: {myReviews[0].comment}
+                            </p>
+                          </>
+                        );
+                      } else {
+                        return (
+                          <>
+                            <Typography component="legend">
+                              Please score
+                            </Typography>
+                            <Rating
+                              size="large"
+                              precision={0.5}
+                              max={10}
+                              onChange={(e) => setRating(e.target.value)}
+                            />
+                            <br />
+                            <br />
+                            <TextField
+                              label="Review comment"
+                              multiline
+                              width="300px"
+                              maxRows={4}
+                              onChange={(e) => setComment(e.target.value)}
+                            />
+                            <br />
+                            <br />
+                            <Button
+                              variant="contained"
+                              color="secondary"
+                              onClick={() => sendReview()}
+                            >
+                              Send review
+                            </Button>
+                            <br />
+                          </>
+                        );
+                      }
+                    }
+                  })()}
                 </div>
               </div>
             </div>
@@ -214,10 +176,41 @@ const MovieDetails = () => {
     );
   };
 
+  const loadMyReview = async () => {
+    //console.log(id);
+    setReviewed(false);
+
+    try {
+      const response = await axios.get(
+        `http://localhost:4001/api/reviews/myreviews/${id}`,
+        {
+          headers: {
+            authorization: sessionStorage.getItem("sessionId"),
+          },
+        }
+      );
+      setMyReviews(response.data);
+      if (!response.data || response.data === []) {
+        setReviewed(false);
+      } else {
+        setReviewed(true);
+      }
+      console.log(response.data);
+    } catch (error) {
+      alert("Hiba lépett fel a review-k betöltésekor.");
+
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    loadMyReview();
+  }, [id]);
+
   const sendReview = async () => {
     try {
       const response = await axios.post(
-        `http://localhost:4001/api/review`,
+        `http://localhost:4001/api/reviews`,
         {
           movieId: movie.id,
           rating: rating,

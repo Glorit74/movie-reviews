@@ -14,6 +14,6 @@ app.use(
 app.use(express.json());
 
 app.use("/api/login", loginRoutes);
-app.use("/api/review", reviewRoutes);
+app.use("/api/reviews", reviewRoutes);
 
 module.exports = app;
