@@ -19,6 +19,8 @@ const MovieDetails = () => {
   const [reviewed, setReviewed] = useState(false);
   const [loggedInn, setLoggedInn] = useState();
   const [myReviews, setMyReviews] = useState(null);
+  const [anyReview, setAnyReview] = useState(false);
+  const [allReview, setAllReview] = useState(null);
   let userId = null;
 
   const checkSessionStorage2 = () => {
@@ -195,7 +197,28 @@ const MovieDetails = () => {
       } else {
         setReviewed(true);
       }
+      //console.log(response.data);
+    } catch (error) {
+      alert("Hiba lépett fel a review-k betöltésekor.");
+
+      console.log(error);
+    }
+  };
+
+  const loadAllReview = async () => {
+
+    try {
+      const response = await axios.get(
+        `http://localhost:4001/api/reviews/${id}`
+      );
       console.log(response.data);
+      if (response.data === [] ) {
+        setAnyReview(false); 
+      } else {
+        setAnyReview(true);
+        setAllReview(response.data);
+      }
+
     } catch (error) {
       alert("Hiba lépett fel a review-k betöltésekor.");
 
@@ -205,6 +228,7 @@ const MovieDetails = () => {
 
   useEffect(() => {
     loadMyReview();
+    loadAllReview();
   }, [id]);
 
   const sendReview = async () => {
@@ -223,6 +247,7 @@ const MovieDetails = () => {
         }
       );
       setReviewed(true);
+      loadMyReview();
     } catch (error) {
       if ((error.response.status = 409)) {
         alert("Hiba lépett fel a posztoláskor.");

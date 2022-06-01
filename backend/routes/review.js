@@ -26,7 +26,8 @@ router.get("/", async(req, res) => {
     const reviews = await Review.find()
         .populate("userId")
         //console.log(inst);
-    if (!reviews) return res.sendStatus(404);
+    if (!reviews) return res.json(null);
+
     res.json(reviews);
 });
 
@@ -35,7 +36,7 @@ router.get("/:movieId", async(req, res) => {
 
     const reviews = await Review.find({ movieId: req.params.movieId })
         .populate('userId')
-    if (!reviews) return res.sendStatus(404);
+    if (!reviews) return res.json(null);
 
     res.json(reviews);
 });
@@ -45,7 +46,7 @@ router.get("/myreviews", authenticate, async(req, res) => {
 
     const reviews = await Review.find({ userId: res.locals.userId })
 
-    if (!reviews) return res.sendStatus(404);
+    if (!reviews) return res.json(null);
 
     res.json(reviews);
 });
