@@ -8,6 +8,8 @@ import { getMovie } from "../api/movies";
 import MovieCard from "../components/Moviecard";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import jwt_decode from "jwt-decode";
+
 
 const MovieDetails = () => {
   let navigate = useNavigate();
@@ -16,6 +18,26 @@ const MovieDetails = () => {
   const [rating, setRating] = useState(null);
   const [comment, setComment] = useState(null);
   const [reviewed, setReviewed] = useState(false);
+  const [loggedInn, setLoggedInn] = useState();
+
+
+  const checkSessionStorage2 = () => {
+    let token = sessionStorage.getItem("sessionId");
+    console.log(token);
+
+     if (token) {
+      setLoggedInn(true);
+    } 
+    console.log(`LoggedIN = ${loggedInn}`);
+  };
+
+
+
+  useEffect(() => {
+
+    checkSessionStorage2();
+  }, []);
+
 
   useEffect(() => {
     const getMovieDetails = async () => {
@@ -87,10 +109,66 @@ const MovieDetails = () => {
                       </span>
                     ))}
                   </div>
-                  <div className="buttons-container">
+                  {/* <div className="buttons-container">
                     In case you wish to leave a review, please login!
-                  </div>
-                  {!reviewed ? (
+                  </div> */}
+
+                  { (() => {
+                        if (!loggedInn)
+                            return <div className="buttons-container">
+                            In case you wish to leave a review, please login!
+                            </div>
+                        if (loggedInn) {
+                          if (reviewed) {
+
+                            return <>
+                              <br />
+                              <p>You have already reviewed this movie:</p>
+                              <p>Your rating: {rating}/10</p>
+                              <p>Your commment: {comment}</p>
+                            </>
+                          }else{
+                            return <>
+                              <Typography component="legend">Please score</Typography>
+                              <Rating
+                                size="large"
+                                precision={0.5}
+                                max={10}
+                                onChange={(e) => setRating(e.target.value)}
+                              />
+                              <br />
+                              <br />
+                              <TextField
+                                label="Review comment"
+                                multiline
+                                width="300px"
+                                maxRows={4}
+                                onChange={(e) => setComment(e.target.value)}
+                              />
+                              <br />
+                              <br />
+                              <Button
+                                variant="contained"
+                                color="secondary"
+                                onClick={() => sendReview()}
+                              >
+                                Send review
+                              </Button>
+                              <br />
+                            </>
+
+                          }
+                        }
+                    })()
+
+                  }
+
+
+
+
+
+
+                  {/* {!reviewed ? (
                     <>
                       <Typography component="legend">Please score</Typography>
                       <Rating
@@ -126,7 +204,7 @@ const MovieDetails = () => {
                       <p>Your rating: {rating}/10</p>
                       <p>Your commment: {comment}</p>
                     </>
-                  )}
+                  )} */}
                 </div>
               </div>
             </div>
