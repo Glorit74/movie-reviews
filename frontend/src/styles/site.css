@@ -1,1 +1,170 @@
-@import"https://fonts.googleapis.com/css2?family=Roboto&display=swap";body{font-family:"Roboto",sans-serif;background-color:#eee;margin:0}body a{text-decoration:none;color:#fff}.navbar-logo{height:100px;padding:10px}.movies-container{display:flex;justify-content:center;padding:1em;margin:0 auto}.movies-container .cards-container{padding:1em;display:flex;width:100%;justify-content:flex-start;flex-flow:row wrap;flex-wrap:wrap;gap:50px}.movies-container .cards-container .card-container .movie-card{min-height:250px}.movies-container .cards-container .card-container .movie-card .movie-poster-container{position:relative}.movies-container .cards-container .card-container .movie-card .movie-poster-container .category-container{position:absolute;top:0;left:0;display:flex;gap:3px}.movies-container .cards-container .card-container .movie-card .movie-poster-container .category-container .category-item{display:inline-block;font-weight:bold;font-size:12px;padding:2px 3px;height:16px;line-height:16px;background-color:#000;color:#fff}.movies-container .cards-container .card-container .movie-card .movie-poster-container .movie-rating-container{position:absolute;top:5px;right:5px;width:30px;height:30px;font-size:.9em;background-color:rgba(0,0,0,.75);color:#fff;font-weight:900;text-align:center;line-height:30px}.movies-container .cards-container .card-container .movie-card .movie-poster-container .movie-poster{min-height:340px;width:100%;height:100%;-o-object-fit:cover;object-fit:cover}.movies-container .cards-container .card-container .movie-card .movie-title-container{height:40px;vertical-align:middle;font-weight:bold;text-align:center;justify-content:center;display:flex;align-items:center}.movies-container .cards-container .card-container .movie-card .movie-title-container a{color:#000}.movies-container .cards-container .card-container .movie-card .movie-title-container a:hover{color:#000}.movie-details-container{display:flex;justify-content:flex-start;align-items:center}.movie-details-container .image{margin:0;padding:0;width:40%}.movie-details-container img{width:100%}.movie-details-container .info{width:100%;height:100%}.movie-details-container .info .info-container{position:relative;padding:1.5em}.movie-details-container .info .info-container .score-container{position:absolute;top:2em;right:2em;line-height:18px;font-weight:bold;font-size:18px}.movie-details-container .info .info-container p{line-height:1.75em}.movie-details-container .info .info-container .buttons-container{padding-top:2em}
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #eee;
+  margin: 0;
+}
+
+body a {
+  text-decoration: none;
+  color: white;
+}
+
+.navbar-logo {
+  height: 100px;
+  padding: 10px;
+}
+
+.movies-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 1em;
+  margin: 0 auto;
+}
+
+.movies-container .cards-container {
+  padding: 1em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  gap: 50px;
+}
+
+.movies-container .cards-container .card-container .movie-card {
+  min-height: 250px;
+}
+
+.movies-container .cards-container .card-container .movie-card .movie-poster-container {
+  position: relative;
+}
+
+.movies-container .cards-container .card-container .movie-card .movie-poster-container .category-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 3px;
+}
+
+.movies-container .cards-container .card-container .movie-card .movie-poster-container .category-container .category-item {
+  display: inline-block;
+  font-weight: bold;
+  font-size: 12px;
+  padding: 2px 3px;
+  height: 16px;
+  line-height: 16px;
+  background-color: black;
+  color: white;
+}
+
+.movies-container .cards-container .card-container .movie-card .movie-poster-container .movie-rating-container {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 30px;
+  height: 30px;
+  font-size: 0.9em;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: white;
+  font-weight: 900;
+  text-align: center;
+  line-height: 30px;
+}
+
+.movies-container .cards-container .card-container .movie-card .movie-poster-container .movie-poster {
+  min-height: 340px;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.movies-container .cards-container .card-container .movie-card .movie-title-container {
+  height: 40px;
+  vertical-align: middle;
+  font-weight: bold;
+  text-align: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.movies-container .cards-container .card-container .movie-card .movie-title-container a {
+  color: black;
+}
+
+.movies-container .cards-container .card-container .movie-card .movie-title-container a:hover {
+  color: black;
+}
+
+.movie-details-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.movie-details-container .image {
+  margin: 0;
+  padding: 0;
+  width: 40%;
+}
+
+.movie-details-container img {
+  width: 100%;
+}
+
+.movie-details-container .info {
+  width: 100%;
+  height: 100%;
+}
+
+.movie-details-container .info .info-container {
+  position: relative;
+  padding: 1.5em;
+}
+
+.movie-details-container .info .info-container .score-container {
+  position: absolute;
+  top: 2em;
+  right: 2em;
+  line-height: 18px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.movie-details-container .info .info-container p {
+  line-height: 1.75em;
+}
+
+.movie-details-container .info .info-container .buttons-container {
+  padding-top: 2em;
+}
+/*# sourceMappingURL=site.css.map */
