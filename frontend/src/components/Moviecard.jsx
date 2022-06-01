@@ -6,11 +6,15 @@ import getImageOrFallbackUrl from "../api/helpers/imageHelper";
 
 const MovieCard = ({ movie }) => {
   const getCategories = (genres) => {
+    if (!genres) {
+      return null;
+    }
+
     return (
       <>
         {genres.slice(0, 2).map((genre) => (
-          <span key={`genre-${genre.name}`} className="category-item">
-            {genre.name}
+          <span key={`genre-${genre}`} className="category-item">
+            {genre}
           </span>
         ))}
       </>
@@ -27,21 +31,21 @@ const MovieCard = ({ movie }) => {
             </div>
 
             <div className="movie-rating-container">
-              <span>{movie.score}</span>
+              <span>{movie.vote_average?.toFixed(1)}</span>
             </div>
 
             <Link to={`/movies/${movie.id}`}>
               <img
                 className="movie-poster"
-                src={getImageOrFallbackUrl(movie.poster?.medium)}
-                alt={movie.name}
+                src={getImageOrFallbackUrl(movie.poster_path)}
+                alt={movie.title}
               />
             </Link>
           </div>
           <CardContent>
             <div className="movie-title-container">
               <div className="movie-title-content">
-                <Link to={`/movies/${movie.id}`}>{movie.name}</Link>
+                <Link to={`/movies/${movie.id}`}>{movie.title}</Link>
               </div>
             </div>
           </CardContent>

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { getMovies, getPopularMovies } from "../api/movies";
-import MovieCard from "../components/Moviecard";
+import { getAllGenres, getMovies, getPopularMovies } from "../api/movies";
+import MovieCard from "../components/MovieCard";
 import { useSearchParams } from "react-router-dom";
 
 const Movies = () => {
@@ -12,11 +12,11 @@ const Movies = () => {
     const getMoviesData = async (filter) => {
       try {
         if (filter) {
-          const movieResponse = await getMovies(filter);
-          setMovies(movieResponse.data.data.searchMovies);
+          const movies = await getMovies(filter);
+          setMovies(movies);
         } else {
-          const movieResponse = await getPopularMovies();
-          setMovies(movieResponse.data.data.popularMovies);
+          const movies = await getPopularMovies();
+          setMovies(movies);
         }
       } catch (error) {
         throw error;

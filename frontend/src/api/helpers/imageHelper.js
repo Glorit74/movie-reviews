@@ -3,7 +3,7 @@ const getImageOrFallbackUrl = (imageUrl) => {
     return process.env.REACT_APP_FALLBACK_IMAGE_URL;
   }
 
-  return imageUrl;
+  return `https://image.tmdb.org/t/p/w500/${imageUrl}`;
 };
 
 export default getImageOrFallbackUrl;

@@ -13,7 +13,7 @@ function Login({setLoggedIn}) {
       let response = await axios.post("http://localhost:4001/api/login", {
         code,
       });
-      //console.log("getToken: ", response);
+      console.log("getToken: ", response);
       sessionStorage.setItem("sessionId", response.data);
       setLoggedIn(true);
       navigate(`/`);

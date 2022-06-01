@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Container } from "@mui/system";
 import Paper from "@mui/material/Paper";
-import { Typography, Rating, TextField, Button } from "@mui/material";
+import { Typography, Rating, TextField, Button, Chip } from "@mui/material";
 import getImageOrFallbackUrl from "../api/helpers/imageHelper";
 import { getMovie } from "../api/movies";
-import MovieCard from "../components/Moviecard";
+import MovieCard from "../components/MovieCard";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
@@ -18,8 +18,8 @@ const MovieDetails = () => {
   const [comment, setComment] = useState(null);
   const [reviewed, setReviewed] = useState(false);
   const [loggedInn, setLoggedInn] = useState();
-  const [myReviews, setMyReviews] = useState(null);
-  const [anyReview, setAnyReview] = useState(false);
+  const [myReviews, setMyReviews] = useState(null); 
+   const [anyReview, setAnyReview] = useState(false);
   const [allReview, setAllReview] = useState(null);
   let userId = null;
 
@@ -42,7 +42,7 @@ const MovieDetails = () => {
     const getMovieDetails = async () => {
       try {
         const response = await getMovie(id);
-        setMovie(response.data.data.movie);
+        setMovie(response);
       } catch (error) {
         throw error;
       }
@@ -78,40 +78,30 @@ const MovieDetails = () => {
             <div className="movie-details-container">
               <div className="image">
                 <img
-                  src={getImageOrFallbackUrl(movie.poster?.medium)}
-                  alt={movie.name}
+                  src={getImageOrFallbackUrl(movie?.poster_path)}
+                  alt={movie.title}
                 />
               </div>
               <div className="info">
                 <div className="info-container">
                   <Typography variant="h4" component="h5">
-                    {movie.name}
+                    {movie.title}
                   </Typography>
                   <p>({movie.runtime} min)</p>
-                  <div className="score-container">{movie.score}/10</div>
+                  <div className="score-container">{movie.vote_average}/10</div>
                   <div className="description-container">{movie.overview}</div>
                   <br />
                   <div className="description-container">
                     <b>Released:</b>
-                    {movie.releaseDate}
+                    <span>{movie.release_date}</span>
                   </div>
                   <br />
                   <div className="description-container">
                     <b>Genres: </b>
                     {movie.genres.map((genre) => (
-                      <span
-                        key={`genre-${genre.name}`}
-                        className="category-item"
-                      >
-                        {" << "}
-                        {genre.name} {" >> "}
-                      </span>
+                      <Chip key={`genre-${genre}`} label={genre} />
                     ))}
                   </div>
-                  {/* <div className="buttons-container">
-                    In case you wish to leave a review, please login!
-                  </div> */}
-
                   {(() => {
                     if (!loggedInn)
                       return (
@@ -125,12 +115,8 @@ const MovieDetails = () => {
                           <>
                             <br />
                             <p>You have already reviewed this movie:</p>
-                            <p>
-                              Your rating: {myReviews[0].rating}/10
-                            </p>
-                            <p>
-                              Your commment: {myReviews[0].comment}
-                            </p>
+                            <p>Your rating: {myReviews[0].rating}/10</p>
+                            <p>Your commment: {myReviews[0].comment}</p>
                           </>
                         );
                       } else {
@@ -197,8 +183,9 @@ const MovieDetails = () => {
       } else {
         setReviewed(true);
       }
-      //console.log(response.data);
+      console.log(response.data);
     } catch (error) {
+      
       alert("Hiba lépett fel a review-k betöltésekor.");
 
       console.log(error);
@@ -221,10 +208,8 @@ const MovieDetails = () => {
 
     } catch (error) {
       alert("Hiba lépett fel a review-k betöltésekor.");
-
-      console.log(error);
     }
-  };
+  }
 
   useEffect(() => {
     loadMyReview();
